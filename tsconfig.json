@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "target": "es2020",
+    "module": "commonjs",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "sourceMap": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
