@@ -76,3 +76,68 @@ function fixFlip(f: FixFlippable) {
 fixFlip(FixFlippable.Burger)
 fixFlip(FixFlippable.Chair)
 // fixFlip(12) // エラー
+
+// 関数の例
+function add(a: number, b: number) {
+  return a + b
+}
+
+// 名前付き関数
+function greet(name: string) {
+  return 'hello' + name
+}
+
+// 関数式
+let greet2 = function (name: string) {
+  return 'hello' + name
+}
+
+// アロー関数式
+let greet3 = (name: string) => {
+  return 'hello' + name
+}
+
+// アロー関数式の省略記法
+let greet4 = (name: string) => 'hello' + name
+
+function log(message: string, userId?: string) {
+  let time = new Date().toLocaleTimeString()
+  console.log(time, message, userId || 'Not signed in')
+}
+
+log('Page loaded')
+log('User signed in', 'da763be')
+
+// レストパラメーター
+function sumVariadicSafe(...numbers: number[]): number {
+  return numbers.reduce((total, n) => total + n, 0)
+}
+
+console.log(`${sumVariadicSafe(1, 2, 3)}`)
+
+// jsではクラスのメソッド内だけでなく、全ての関数にthisが定義されている
+// しかし、関数の呼び出し方によってthisの意味合いが異なるため、多くのチームでは
+// クラスメソッド以外の場所でのthis使用を禁止している
+// tslintのno-invalid-thisを有効にすることで、thisを禁止できる
+
+// ジェネレーター
+function* createFibonacciGenerator(): Generator<number> {
+  let a = 0
+  let b = 1
+  while (true) {
+    yield a
+    ;[a, b] = [b, a + b]
+  }
+}
+
+let gen = createFibonacciGenerator()
+console.log(gen.next())
+console.log(gen.next())
+console.log(gen.next())
+
+// 呼び出しシグネチャ
+// function greet(name: string)
+type Greet = (name: string) => string
+
+// function log(message: string, userId?: string)
+type Log = (message: String, userId?: string) => void

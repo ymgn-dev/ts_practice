@@ -35,4 +35,34 @@ function flip(f) {
 }
 flip(1 /* Chair */);
 flip(2 /* Cup */);
-flip(12);
+flip(12); // numberが渡せてしまう
+function fixFlip(f) {
+    return 'flipped it';
+}
+fixFlip("Burger" /* Burger */);
+fixFlip("Chair" /* Chair */);
+// fixFlip(12) // エラー
+// 関数の例
+function add(a, b) {
+    return a + b;
+}
+// 名前付き関数
+function greet(name) {
+    return 'hello' + name;
+}
+// 関数式
+var greet2 = function (name) {
+    return 'hello' + name;
+};
+// アロー関数式
+var greet3 = function (name) {
+    return 'hello' + name;
+};
+// アロー関数式の省略記法
+var greet4 = function (name) { return 'hello' + name; };
+function log(message, userId) {
+    var time = new Date().toLocaleTimeString();
+    console.log(time, message, userId || 'Not signed in');
+}
+log('Page loaded');
+log('User signed in', 'da763be');
