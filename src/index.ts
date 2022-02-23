@@ -1,3 +1,5 @@
+import { runInThisContext } from 'vm'
+
 console.log('Hello, TypeScript!')
 
 /// tsの型アノテーションはできる限り使用せず、推論させるのが良い
@@ -141,3 +143,73 @@ type Greet = (name: string) => string
 
 // function log(message: string, userId?: string)
 type Log = (message: String, userId?: string) => void
+
+// ジェネリック型のデフォルトの型
+// type MyEvent<T = HTMLElemnt> = {
+//   target: T
+// }
+
+// クラスと継承
+type Color = 'Black' | 'White'
+type File = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
+type Rank = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+
+class Position {
+  constructor(private file: File, private rank: Rank) {}
+
+  distanceFrom(position: Position) {
+    return {
+      rank: Math.abs(position.rank - this.rank),
+      file: Math.abs(position.file.charCodeAt(0) - this.file.charCodeAt(0)),
+    }
+  }
+}
+
+abstract class Piece {
+  constructor(private readonly color: Color, file: File, rank: Rank) {
+    this.position = new Position(file, rank)
+  }
+
+  protected position: Position
+
+  moveTo(position: Position) {
+    this.position = position
+  }
+
+  abstract canMoveTo(position: Position): boolean
+}
+
+class King extends Piece {
+  canMoveTo(position: Position): boolean {
+    let distance = this.position.distanceFrom(position)
+    return distance.rank < 2 && distance.file < 2
+  }
+}
+
+class Game {
+  private pieces = Game.makePieces()
+
+  private static makePieces() {
+    return [
+      // King
+      new King('White', 'E', 1),
+      new King('Black', 'E', 8),
+    ]
+  }
+}
+
+// インターフェイス
+interface Animal {
+  eat(food: string): void
+  sleep(hours: number): void
+}
+
+// 実装(implementsでインターフェイスを実装していることを表現できる)
+class Cat implements Animal {
+  eat(food: string): void {
+    console.info('Ate some', food, '.Mmm!')
+  }
+  sleep(hours: number): void {
+    console.info('Slept for', hours, 'hours')
+  }
+}
