@@ -200,12 +200,19 @@ class Game {
 
 // インターフェイス
 interface Animal {
+  readonly name: string
   eat(food: string): void
   sleep(hours: number): void
 }
 
 // 実装(implementsでインターフェイスを実装していることを表現できる)
 class Cat implements Animal {
+  constructor(name: string) {
+    this.name = name
+  }
+
+  readonly name: string
+
   eat(food: string): void {
     console.info('Ate some', food, '.Mmm!')
   }
@@ -213,3 +220,65 @@ class Cat implements Animal {
     console.info('Slept for', hours, 'hours')
   }
 }
+
+// ファクトリパターン
+type Shoe = {
+  purpose: string
+}
+
+class BalletFlat implements Shoe {
+  purpose = 'dancing'
+}
+
+class Boot implements Shoe {
+  purpose = 'woodcutting'
+}
+
+class Sneaker implements Shoe {
+  purpose = 'walking'
+}
+
+let Shoe = {
+  create(type: 'balletFlat' | 'boot' | 'sneaker'): Shoe {
+    switch (type) {
+      case 'balletFlat':
+        return new BalletFlat()
+      case 'boot':
+        return new Boot()
+      case 'sneaker':
+        return new Sneaker()
+    }
+  },
+}
+
+// ビルダーパターン
+class RequestBuilder {
+  private data: object | null = null
+  private method: 'get' | 'post' | null = null
+  private url: string | null = null
+
+  setMethod(method: 'get' | 'post'): this {
+    this.method = method
+    return this
+  }
+
+  setData(data: object): this {
+    this.data = data
+    return this
+  }
+
+  setUrl(url: string): this {
+    this.url = url
+    return this
+  }
+
+  send(): string {
+    return '404'
+  }
+}
+
+new RequestBuilder()
+  .setUrl('/users')
+  .setMethod('get')
+  .setData({ firstName: 'Anna' })
+  .send()
