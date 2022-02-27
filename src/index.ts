@@ -310,3 +310,21 @@ abstract class Promise<T, E extends Error> {
     throw Error
   }
 }
+
+// インポートとエクスポート
+// 必ずES2015のimport, exportを使うようにする(CommonJSなどで提供される方法は使用しない)
+
+// a.ts
+// export function foo() {}
+// export function bar() {}
+
+// import { foo, bar } from './a'
+// foo()
+// export let result = bar()
+
+// デフォルトエクスポート
+// c.ts
+// export default function meow(loadness: number) {}
+
+// d.ts
+// import meow from './c'
