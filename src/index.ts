@@ -282,3 +282,31 @@ new RequestBuilder()
   .setMethod('get')
   .setData({ firstName: 'Anna' })
   .send()
+
+setTimeout(() => {
+  console.info('A')
+}, 1)
+
+setTimeout(() => {
+  console.info('B')
+}, 2)
+
+console.info('C')
+
+// プロミスの実装(あくまで練習であり、組み込みの実装を使用するべき)
+type Executor<T, E extends Error> = (
+  resolve: (result: T) => void,
+  reject: (error: E) => void
+) => void
+
+abstract class Promise<T, E extends Error> {
+  constructor(f: Executor<T, E>) {}
+  then<U, F extends Error>(g: (result: T) => Promise<U, F> | U): Promise<U, F> {
+    // TODO: implement
+    throw Error
+  }
+  catch<U, F extends Error>(g: (error: E) => Promise<U, F> | U): Promise<U, F> {
+    // TODO: implement
+    throw Error
+  }
+}
